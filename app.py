@@ -91,17 +91,32 @@ def hybrid_encrypt(plaintext, public_pem):
     return {"ciphertext": aes["ciphertext"], "nonce": aes["nonce"],
             "encrypted_key": wrapped_key, "algorithm": "Hybrid AES-256-GCM + RSA-OAEP"}
 
+
 def hybrid_decrypt(ciphertext, nonce, encrypted_key, private_pem):
-    raw_key = rsa_decrypt(encrypted_key, private_pem)
-    key_b64 = b64e(raw_key.encode("latin1")) if False else None
-    # RSA helper returns UTF-8 text, so unwrap raw key using a dedicated byte operation.
-    private_key = load_pem_private_key(private_pem.encode("utf-8"), password=None)
+    private_key = load_pem_private_key(
+        private_pem.encode("utf-8"),
+        password=None
+    )
+
+    # Recover the original AES key as raw bytes
     key = private_key.decrypt(
         b64d(encrypted_key),
-        padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                     algorithm=hashes.SHA256(), label=None)
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
     )
-    return AESGCM(key).decrypt(b64d(nonce), b64d(ciphertext), None).decode("utf-8")
+
+    # Decrypt the message using the recovered AES key
+    plaintext = AESGCM(key).decrypt(
+        b64d(nonce),
+        b64d(ciphertext),
+        None
+    )
+
+    return plaintext.decode("utf-8")
+
 
 
 
