@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traditional & Modern Encryption System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">CYBERSECURITY • EDUCATIONAL PROJECT</p>
+    <h1>Traditional & Modern<br>Encryption System</h1>
+    <p class="intro">Explore classical ciphers and modern cryptography in one simple application.</p>
+  </div>
+</header>
+<main class="wrap">
+  <section class="notice">
+    <strong>Learning demonstration:</strong> Atbash and substitution ciphers are not secure for real-world use.
+    Keep generated private keys and AES keys secret. This demo does not store your messages or keys.
+  </section>
+
+  <section class="panel">
+    <h2>1. Choose an encryption method</h2>
+    <div class="method-grid">
+      <button class="method active" data-method="atbash"><span>01</span><b>Atbash Cipher</b><small>Traditional · Letter reversal</small></button>
+      <button class="method" data-method="substitution"><span>02</span><b>Substitution Cipher</b><small>Traditional · Alphabet mapping</small></button>
+      <button class="method" data-method="aes"><span>03</span><b>AES-256-GCM</b><small>Modern · Symmetric encryption</small></button>
+      <button class="method" data-method="rsa"><span>04</span><b>RSA-OAEP</b><small>Modern · Asymmetric encryption</small></button>
+      <button class="method" data-method="hybrid"><span>05</span><b>Modern Hybrid</b><small>AES + RSA key protection</small></button>
+      <button class="method" data-method="integrated"><span>06</span><b>Traditional + Modern Integration</b><small>Classical cipher + AES + RSA</small></button>
+    </div>
+    <p id="methodHelp" class="help">Atbash replaces each letter with its opposite in the alphabet. The same operation decrypts it.</p>
+  </section>
+
+  <section class="panel">
+    <h2>2. Enter your message</h2>
+    <label for="plainText">Plaintext</label>
+    <textarea id="plainText" rows="5" placeholder="Type the message you want to encrypt..."></textarea>
+    <div id="keyArea" class="key-area hidden">
+      <div id="traditionalLayer" class="hidden">
+        <label for="traditionalMethod">Traditional method to apply first</label>
+        <select id="traditionalMethod">
+          <option value="atbash">Atbash Cipher</option>
+          <option value="substitution">Substitution Cipher</option>
+        </select>
+        <p class="help">This classical transformation is applied before modern encryption and reversed after modern decryption.</p>
+      </div>
+      <div class="key-head"><h3>RSA key pair</h3><button id="generateKeys" class="secondary">Generate key pair</button></div>
+      <label for="publicKey">Public key (used for encryption)</label>
+      <textarea id="publicKey" rows="4" placeholder="Paste an RSA public key, or generate a pair..."></textarea>
+      <label for="privateKey">Private key (used for decryption)</label>
+      <textarea id="privateKey" rows="4" placeholder="Keep this key private. It is needed to decrypt RSA / hybrid messages."></textarea>
+      <p class="help">For a real system, private keys should be encrypted at rest and never exposed in a shared browser or public repository.</p>
+    </div>
+    <button id="encryptBtn" class="primary">Encrypt message</button>
+  </section>
+
+  <section class="panel">
+    <h2>3. Encryption result</h2>
+    <div id="encryptStatus" class="status">Your encrypted output will appear here.</div>
+    <div id="encryptOutput" class="output hidden"></div>
+  </section>
+
+  <section class="panel">
+    <h2>4. Decrypt a message</h2>
+    <label for="cipherText">Ciphertext</label>
+    <textarea id="cipherText" rows="4" placeholder="Paste encrypted text here..."></textarea>
+    <div id="decryptExtras"></div>
+    <button id="decryptBtn" class="secondary">Decrypt message</button>
+    <div id="decryptStatus" class="status">Your decrypted message will appear here.</div>
+    <div id="plainOutput" class="output hidden"></div>
+  </section>
+
+  <section class="panel explanation">
+    <h2>Understanding the methods</h2>
+    <div class="explain-grid">
+      <article><h3>Traditional encryption</h3><p>Classical methods such as Atbash and substitution transform letters according to a simple rule. They are useful for learning the history and basic principles of cryptography, but are vulnerable to frequency analysis and brute force.</p></article>
+      <article><h3>Modern encryption</h3><p>AES is symmetric: the same secret key encrypts and decrypts. RSA is asymmetric: a public key encrypts and the matching private key decrypts. This project uses authenticated AES-GCM and RSA-OAEP with SHA-256.</p></article>
+      <article><h3>Why hybrid encryption?</h3><p>RSA is not designed to encrypt long messages directly. Hybrid encryption uses AES-GCM for the message and RSA-OAEP to protect the randomly generated AES key.</p></article>
+      <article><h3>Traditional + modern integration</h3><p>The integrated mode first applies Atbash or Substitution, then encrypts the transformed text with AES-GCM. RSA-OAEP protects the AES key. Decryption reverses these steps in the opposite order. The classical layer is included to demonstrate integration, not to strengthen modern security.</p></article>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">Student educational project · Traditional and modern cryptography</div></footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
