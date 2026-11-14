@@ -22,7 +22,7 @@ A Flask-based educational web application that demonstrates two traditional encr
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/traditional-modern-encryption-system.git
+git clone https://github.com/Arsey12/traditional-modern-encryption-system.git
 cd traditional-modern-encryption-system
 
 python -m venv .venv
@@ -95,5 +95,4 @@ traditional-modern-encryption-system/
 This project illustrates how classical letter-based techniques differ from modern cryptographic systems. It also demonstrates why modern applications commonly combine symmetric encryption for data with asymmetric cryptography for key exchange or key protection.
 
 ## Author
-
-Student project. Replace this section with your name, matriculation number, course code, department, and institution before submission.
+Arsey
