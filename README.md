@@ -95,4 +95,4 @@ traditional-modern-encryption-system/
 This project illustrates how classical letter-based techniques differ from modern cryptographic systems. It also demonstrates why modern applications commonly combine symmetric encryption for data with asymmetric cryptography for key exchange or key protection.
 
 ## Author
-Arsey
+CYB301 GROUP3
